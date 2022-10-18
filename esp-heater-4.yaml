@@ -1,0 +1,71 @@
+substitutions:
+  devicename: ESP Heater 4
+  lower_devicename: esp-heater-4
+
+globals:
+  id: socket_power
+  type: float
+  initial_value: "1200"
+
+esphome:
+  name: "${lower_devicename}"
+  platform: ESP8266
+  board: esp01_1m
+  includes:
+    - mill.h
+
+# Enable logging
+logger:
+  baud_rate: 0
+  level: VERBOSE
+
+api:
+  encryption:
+    key: "9DfUkpTV/6+PinUfizUiEjYVOWfXJVQWXcx5kLG+qrU="
+
+ota:
+  password: "ccff5da6ad59625e8cfc00518abb0f0e"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  reboot_timeout: "0s"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "${lower_devicename} Fallback Hotspot"
+    password: "uiCKDXWtynbO"
+
+captive_portal:
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+uart:
+  id: uart1
+  rx_pin: GPIO03
+  tx_pin: GPIO01
+  baud_rate: 9600
+
+
+
+
+
+climate:
+- platform: custom
+
+  lambda: |-
+    auto my_custom_climate = new MyCustomClimate(id(uart1));
+    App.register_component(my_custom_climate);
+    return {my_custom_climate};
+
+
+  climates:
+    - name: "${devicename} Climate"
+      visual:
+         min_temperature: 5 °C
+         max_temperature: 30 °C
+         temperature_step: 1 °C
