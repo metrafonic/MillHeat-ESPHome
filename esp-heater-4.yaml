@@ -7,6 +7,11 @@ globals:
   type: float
   initial_value: "1200"
 
+external_components:
+  - source:
+      type: local
+      path: components
+
 esphome:
   name: "${lower_devicename}"
   platform: ESP8266
@@ -51,21 +56,5 @@ uart:
   baud_rate: 9600
 
 
-
-
-
-climate:
-- platform: custom
-
-  lambda: |-
-    auto my_custom_climate = new MyCustomClimate(id(uart1));
-    App.register_component(my_custom_climate);
-    return {my_custom_climate};
-
-
-  climates:
-    - name: "${devicename} Climate"
-      visual:
-         min_temperature: 5 °C
-         max_temperature: 30 °C
-         temperature_step: 1 °C
+mill_convection:
+  uart_id: uart1
