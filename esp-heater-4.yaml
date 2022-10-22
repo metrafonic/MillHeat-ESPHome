@@ -50,8 +50,12 @@ uart:
   tx_pin: GPIO01
   baud_rate: 9600
 
-
-
+switch:
+  - platform: gpio
+    pin: GPIO02
+    internal: true
+    restore_mode: ALWAYS_ON
+    name: "${devicename} GPIO"
 
 
 climate:

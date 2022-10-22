@@ -14,9 +14,12 @@ Here are the pin connections:
 - PIN2 - 3v3 + EN
 - PIN5 - RX
 - PIN6 - TX
+- PIN7 - GPIO02
 
 Notice that pin 2 is connected to 3v3 and the EN pin so that the esp01 can boot. This will not be needed for other devices such as the nodemcu.
 
+We need GPIO02 to be set to high. I assume this is how the HF chip could communicate that it was online. I tried running it without this pin and it would stop working after a couple of minutes/hours.
+I presume it didnt fail instantly as the voltage may have been floating when it was diconnected.
 
 ![](IMG_20221018_225900.jpg)
 
